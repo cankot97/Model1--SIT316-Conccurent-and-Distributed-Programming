@@ -1,25 +1,28 @@
-// C++ code
-//
+const int buttonPin = 2;     
+const int ledPin =  13;      
 
-float celsius;
-void setup()
-{
-  pinMode(13, OUTPUT);
-  pinMode(A0, INPUT);
+// variables will change:
+volatile int buttonState = 0;         
+void setup() {
   Serial.begin(9600);
+  // initialize the LED pin as an output:
+  pinMode(ledPin, OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(buttonPin, INPUT);
+  // Attach an interrupt to the ISR vector
+  //attachInterrupt(digitalPinToInterrupt(buttonPin), pin_ISR, CHANGE);
 }
 
-void loop()
-{
-  celsius = map(((analogRead(A0) - 20) * 3.04), 0, 1023, -40, 125);
-  Serial.println(celsius);
-  if(celsius > 35){
-    Serial.println("Too Hot");
-    digitalWrite(13, HIGH);
+void loop() {
+  digitalRead(buttonPin);
+  if (digitalRead(buttonPin) == HIGH){
+  	digitalWrite(ledPin, HIGH);
+    Serial.println("LED ON");
   }
-  else{
-  	digitalWrite(13, LOW);
+  else 
+  {
+    digitalWrite(ledPin, LOW);
+    Serial.println("LED OFF");
   }
-  
-  
 }
+
